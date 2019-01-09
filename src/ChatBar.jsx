@@ -5,7 +5,8 @@ export default class ChatBar extends Component {
       super();
 
       this.state = {
-        term: ''
+        term: '',
+        username: ''
       };
 
   }
@@ -13,29 +14,50 @@ export default class ChatBar extends Component {
   render(){
     return(
       <footer className="chatbar">
-          <input className="chatbar-username" placeholder="Your Name (Optional)" defaultValue={this.props.currentUser} />
+          <input
+            className="chatbar-username"
+            placeholder="Your Name (Optional)"
+            value={this.state.username}
+            onChange={this._updateState('username')}
+            onKeyDown={this._handleEnter('username')}
+            onBlur={this._handleBlurName}
+          />
           <input
             className="chatbar-message"
             placeholder="Type a message and hit ENTER"
             value={this.state.term}
-            onChange={this._updateTerm}
-            onKeyDown={this._handleEnter}
+            onChange={this._updateState('term')}
+            onKeyDown={this._handleEnter('message')}
+            ref = 'message'
           />
       </footer>
     );
   }
 
-  //update the term state as the user types in a message.
-  _updateTerm = (e) => {
-    this.setState({ term: e.target.value });
-  }
+  //update the state as the user types in a message or username.
+  _updateState = key => e => {
+      this.setState({ [key]: e.target.value });
+  };
 
-  //handle sending data up when enter pressed.
-  _handleEnter = (e) => {
+  //Send username or message when enter is pressed.
+  _handleEnter = key => e => {
     if (e.keyCode == 13){
-      this.props.addMessage(this.state.term);
-      this.setState({ term: "" });
+      switch (key){
+        case 'username':
+          this.props.addName(this.state.username);
+          this.refs['message'].focus(); //move to the message input when name entered.
+          break;
+        case 'message':
+          this.props.addMessage(this.state.term);
+          this.setState({ term: "" });
+          break;
+        default:
+      }
     }
+  };
 
+  _handleBlurName = () => {
+    this.props.addName(this.state.username);
+    console.log("focus name");
   };
 }

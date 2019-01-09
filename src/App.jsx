@@ -7,44 +7,55 @@ class App extends Component {
   constructor(){
     super();
     this.state = {
-      messageID: 1,
-      currentUser:"TestUser",
-      messages:[
-        {
-          type: "incomingMessage",
-          content: "I won't be impressed with technology until I can download food.",
-          username: "Anonymous1",
-          id: 123
-        },
-        {
-          type: "incomingMessage",
-          content: "I enjoy free food.",
-          username: "SuperMan",
-          id: 124
-        }
-      ]
+      currentUser:"",
+      messages:[] // messages coming from the server will be stored here as they arrive
     };
   }
 
   _addMessage = (contents) => {
-    const mID = this.state.messageID;
-    const newMessage = {id: mID, username: this.state.currentUser, content: contents};
-    const messages = this.state.messages.concat(newMessage);
-    this.setState({messages: messages, messageID: mID + 1});
+    const newMessage = {username: this.state.currentUser, content: contents};
+
+    this.socket.send(JSON.stringify(newMessage));
+  };
+
+  _addName = (newName) => {
+    this.setState({currentUser: newName});
   };
 
   componentDidMount(){
-    const ws = new WebSocket('ws://0.0.0.0:3000');
-  }
+    this.socket = new WebSocket('ws://localhost:3001');
+
+    this.socket.onopen = () => {
+          console.log('Connected to WebSocket');
+    };
+
+    this.socket.onmessage = (serverData) => {
+      console.log('Got message from server', serverData);
+      const json = JSON.parse(serverData.data);
+
+      switch (json.type) {
+              case 'text-message':
+                this.setState({
+                  messages: [...this.state.messages, json]
+                });
+                break;
+              case 'initial-messages':
+                this.setState({ messages: json.messages });
+                break;
+              default:
+      }
+
+    };
+  };
 
   render() {
     return (
       <div>
         <nav className="navbar">
-          <a href="/" className="navbar-brand">Chatty</a>
+          <a href="/" className="navbar-brand"><i className="far fa-comment-alt"></i> Chatty</a>
         </nav>
         <MessageList messages={this.state.messages} />
-        <ChatBar currentUser={this.state.currentUser} addMessage={this._addMessage} />
+        <ChatBar addMessage={this._addMessage} addName={this._addName}/>
       </div>
     );
   }
