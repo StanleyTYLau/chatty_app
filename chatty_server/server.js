@@ -7,6 +7,7 @@ const http = require('http');
 const uuid = require('uuid/v4');
 const messageDB = [];
 let numUser = 0;
+const colours = ['#2813b0','#7712ad','#1281ad','#b5165b','#ad15a3','#b37a10','#33ad1d'];
 
 // Set the port to 3001
 const PORT = 3001;
@@ -50,17 +51,19 @@ wss.on('connection', (ws) => {
   const initialMessage = {
     type: 'initial-messages',
     messages: messageDB,
-    currentUser: `Anon${numUser}`
+    currentUser: `Anon${numUser}`,
+    fontColour: colours[wss.clients.size%7]
   };
   ws.send(JSON.stringify(initialMessage));
 
   ws.on('message', data => {
     const objData = JSON.parse(data);
-    console.log(`Got message from the User: ${objData.username} type: ${objData.type} content: ${objData.content}`);
+    console.log(`Got message from the User: ${objData.username} type: ${objData.type} content: ${objData.content} colour: ${objData.fontColour}`);
     const objectToBroadcast = {
       id: uuid(),
       content: objData.content,
       username: objData.username,
+      fontColour: objData.fontColour,
       type: ''
     };
 

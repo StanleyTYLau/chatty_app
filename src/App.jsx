@@ -9,6 +9,7 @@ class App extends Component {
     super();
     this.state = {
       currentUser:"Anon",
+      fontColour:"",
       numUser: 0,
       messages:[] // messages coming from the server will be stored here as they arrive
     };
@@ -18,6 +19,7 @@ class App extends Component {
     const newMessage = {
       username: this.state.currentUser,
       content: contents,
+      fontColour: this.state.fontColour,
       type:'post-message'
     };
 
@@ -43,8 +45,8 @@ class App extends Component {
     };
 
     this.socket.onmessage = (serverData) => {
-      console.log('Got message from server', serverData);
       const json = JSON.parse(serverData.data);
+      console.log("font colour:",json.fontColour);
 
       switch (json.type) {
               case 'post-message':
@@ -54,7 +56,11 @@ class App extends Component {
                 });
                 break;
               case 'initial-messages':
-                this.setState({ messages: json.messages, currentUser: json.currentUser });
+                this.setState({
+                  messages: json.messages,
+                  currentUser: json.currentUser,
+                  fontColour: json.fontColour
+                });
                 break;
               case 'update-userCount':
                 this.setState({ numUser: json.userCount});

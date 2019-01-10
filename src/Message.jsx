@@ -1,11 +1,11 @@
 import React, {Component} from 'react';
 
-const Message = ({username, content, type}) => {
+const Message = ({username, content, type, fontColour}) => {
 
   if (type === 'post-message') {
     return(
       <div className="message">
-        <span className="message-username">{username}</span>
+        <span className="message-username" style={{color:fontColour}}>{username}</span>
         <span className="message-content">{content}</span>
       </div>
     );

@@ -4,7 +4,12 @@ import Message from './Message.jsx';
 const MessageList = ({messages}) => {
   const arr = messages;
   const messageItems = arr.map( (message) =>
-    <Message key={message.id} content={message.content} username={message.username} type={message.type}/>
+    <Message key={message.id}
+      content={message.content}
+      username={message.username}
+      type={message.type}
+      fontColour={message.fontColour}
+    />
   );
 
   return(
