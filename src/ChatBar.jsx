@@ -16,11 +16,11 @@ export default class ChatBar extends Component {
       <footer className="chatbar">
           <input
             className="chatbar-username"
-            placeholder="Your Name (Optional)"
+            placeholder="Name (Optional), hit ENTER"
             value={this.state.username}
             onChange={this._updateState('username')}
             onKeyDown={this._handleEnter('username')}
-            onBlur={this._handleBlurName}
+            //onBlur={this._handleBlurName}
           />
           <input
             className="chatbar-message"
@@ -56,8 +56,7 @@ export default class ChatBar extends Component {
     }
   };
 
-  _handleBlurName = () => {
-    this.props.addName(this.state.username);
-    console.log("focus name");
-  };
+  // _handleBlurName = () => {
+  //   this.props.addName(this.state.username);
+  // };
 }

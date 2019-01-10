@@ -5,6 +5,8 @@ const WebSocket = require('ws');
 const SocketServer = WebSocket.Server;
 const http = require('http');
 const uuid = require('uuid/v4');
+const messageDB = [];
+let numUser = 0;
 
 // Set the port to 3001
 const PORT = 3001;
@@ -38,26 +40,53 @@ wss.broadcastJSON = obj => wss.broadcast(JSON.stringify(obj));
 // When a client connects they are assigned a socket, represented by
 // the ws parameter in the callback.
 wss.on('connection', (ws) => {
-  console.log('Client connected');
+  console.log('Client connected. # of Users:', wss.clients.size, typeof(wss.clients.size));
+
+  //New user ENTERS chatroom - update all user counts.
+  numUser++;
+  wss.broadcastJSON({userCount: wss.clients.size, type: 'update-userCount'});
+
+  //New users receive all previous messages.
+  const initialMessage = {
+    type: 'initial-messages',
+    messages: messageDB,
+    currentUser: `Anon${numUser}`
+  };
+  ws.send(JSON.stringify(initialMessage));
 
   ws.on('message', data => {
     const objData = JSON.parse(data);
-    console.log(`Got message from the User: ${objData.username} said ${objData.content}`);
-
+    console.log(`Got message from the User: ${objData.username} type: ${objData.type} content: ${objData.content}`);
     const objectToBroadcast = {
-              id: uuid(),
-              //date: new Date(),
-              content: objData.content,
-              username: objData.username,
-              type: 'text-message'
+      id: uuid(),
+      content: objData.content,
+      username: objData.username,
+      type: ''
     };
 
-    wss.broadcastJSON(objectToBroadcast);
+    switch (objData.type){
+      case 'post-message':
+        objectToBroadcast.type = 'post-message';
+        messageDB.push(objectToBroadcast);
+        wss.broadcastJSON(objectToBroadcast);
+        break;
+      case 'post-notification':
+        objectToBroadcast.type = 'post-notification';
+        messageDB.push(objectToBroadcast);
+        wss.broadcastJSON(objectToBroadcast);
+        break;
+      default:
+    }
+
 
   });
 
   // Set up a callback for when a client closes the socket. This usually means they closed their browser.
-  ws.on('close', () => console.log('Client disconnected'));
+  ws.on('close', () => {
+    //User EXITS chatroom - update all user counts.
+    wss.broadcastJSON({userCount: wss.clients.size, type: 'update-userCount'});
+    return console.log('Client disconnected');
+  });
 });
 
 server.listen(PORT, () => {
