@@ -59,7 +59,8 @@ wss.on('connection', (ws) => {
   ws.on('message', data => {
     const objData = JSON.parse(data);
     console.log(`Got message from the User: ${objData.username} type: ${objData.type} content: ${objData.content} colour: ${objData.fontColour}`);
-    const objectToBroadcast = {
+
+     const objectToBroadcast = {
       id: uuid(),
       content: objData.content,
       username: objData.username,

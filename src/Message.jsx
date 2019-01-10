@@ -2,7 +2,17 @@ import React, {Component} from 'react';
 
 const Message = ({username, content, type, fontColour}) => {
 
-  if (type === 'post-message') {
+  let matches = content.match(/[^\s]*\.(jpg|png|gif)/);
+
+  if (type === 'post-message' && matches){
+    return(
+      <div className="message">
+        <span className="message-username" style={{color:fontColour}}>{username}</span>
+        <img className="message-content image" src={content} />
+      </div>
+    );
+  }
+  else if (type === 'post-message') {
     return(
       <div className="message">
         <span className="message-username" style={{color:fontColour}}>{username}</span>
