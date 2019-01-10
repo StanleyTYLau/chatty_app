@@ -46,7 +46,6 @@ class App extends Component {
 
     this.socket.onmessage = (serverData) => {
       const json = JSON.parse(serverData.data);
-      console.log("font colour:",json.fontColour);
 
       switch (json.type) {
               case 'post-message':
