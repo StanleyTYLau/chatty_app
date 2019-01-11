@@ -2,13 +2,16 @@ import React, {Component} from 'react';
 
 const Message = ({username, content, type, fontColour}) => {
 
-  let matches = content.match(/[^\s]*\.(jpg|png|gif)/);
+  let matches = content.match(/(.*)(https?[^\s]*\.(jpg|png|gif))(.*)/);
 
   if (type === 'post-message' && matches){
     return(
       <div className="message">
         <span className="message-username" style={{color:fontColour}}>{username}</span>
-        <img className="message-content image" src={content} />
+        <div className="image-container">
+          {matches[1]}<img className="message-content image" src={matches[2]} />{matches[4]}
+        </div>
+
       </div>
     );
   }

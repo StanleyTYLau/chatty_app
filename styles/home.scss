@@ -67,10 +67,19 @@ body {
   flex: 8;
 }
 
+.notification {
+  padding: 5px;
+  font-weight: bold;
+  border-bottom: 1px dotted rgb(179, 169, 169);
+}
+
+.image-container{
+  flex: 8;
+}
+
 .image{
   max-width: 50%;
   height: auto;
-  flex-shrink: 1;
 }
 
 .message-username {
