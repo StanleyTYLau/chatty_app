@@ -41,7 +41,6 @@ wss.broadcastJSON = obj => wss.broadcast(JSON.stringify(obj));
 // When a client connects they are assigned a socket, represented by
 // the ws parameter in the callback.
 wss.on('connection', (ws) => {
-  console.log('Client connected. # of Users:', wss.clients.size, typeof(wss.clients.size));
 
   //New user ENTERS chatroom - update all user counts.
   numUser++;
@@ -58,7 +57,6 @@ wss.on('connection', (ws) => {
 
   ws.on('message', data => {
     const objData = JSON.parse(data);
-    console.log(`Got message from the User: ${objData.username} type: ${objData.type} content: ${objData.content} colour: ${objData.fontColour}`);
 
      const objectToBroadcast = {
       id: uuid(),
