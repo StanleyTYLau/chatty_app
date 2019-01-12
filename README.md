@@ -11,6 +11,7 @@ The client-side single page app is built with ReactJS and communicates with the 
 - Users are assigned different colours for their username.
 - Notification is sent out when users change their name.
 - img png and gif links supported.
+- Number of users connected displayed at top right corner.
 
 ## Getting Started
 
