@@ -17,9 +17,8 @@ The client-side single page app is built with ReactJS and communicates with the 
 
 1. Fork this repository, then clone your fork of this repository.
 2. Install dependencies using the `npm install` command.
-3. Navigate to the chatty_server folder and start the WEB SERVER using the `npm start` command.
-4. Navigate to the root folder and start the CLIENT using the `npm start` command. The app will be served at <http://localhost:3000/>.
-5. Go to <http://localhost:3000/> in your browser.
+3. Start the CLIENT and SERVER using the `npm run local` command. The app will be served at <http://localhost:3000/>.
+4. Go to <http://localhost:3000/> in your browser.
 
 ## Dependencies
 
