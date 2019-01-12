@@ -30,8 +30,6 @@ The client-side single page app is built with ReactJS and communicates with the 
 
 ## Screenshots
 
-!["Tweeter Homepage"](https://github.com/Stanley1111/tweeter/blob/master/docs/TweeterHome.png)
-!["Compose a Tweet"](https://github.com/Stanley1111/tweeter/blob/master/docs/TweeterCompose.png)
-!["Error: Trying to submit with no tweet"](https://github.com/Stanley1111/tweeter/blob/master/docs/ErrorNoTweet.png)
-!["Error: Tweet too long"](https://github.com/Stanley1111/tweeter/blob/master/docs/ErrorTooLong.png)
+!["Chatty Demo"](https://github.com/StanleyTYLau/chatty_app/blob/master/docs/Chatty02.gif)
+
 
