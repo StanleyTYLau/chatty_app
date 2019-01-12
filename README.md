@@ -1,45 +1,37 @@
-React Boilerplate
-=====================
+# Chatty App
 
-A minimal and light dev environment for ReactJS.
+Chatty is a real time web application that allows users to communicate with each other without having to register an account. 
 
-### Usage
+The client-side single page app is built with ReactJS and communicates with the server via WebSockets.
 
-Clone the boilerplate and create your own git repo.
+## Features
 
-```
-git clone git@github.com:lighthouse-labs/react-simple-boilerplate.git
-cd react-simple-boilerplate
-git remote rm origin
-git remote add origin [YOUR NEW REPOSITORY]
-# Manually update your package.json file
-```
+- All users receive and display messages from other users.
+- New users receive old messages.
+- Users are assigned different colours for their username.
+- Notification is sent out when users change their name.
+- img png and gif links supported.
 
-Install the dependencies and start the server.
+## Getting Started
 
-```
-npm install
-npm start
-open http://localhost:3000
-```
+1. Fork this repository, then clone your fork of this repository.
+2. Install dependencies using the `npm install` command.
+3. Navigate to the chatty_server folder and start the WEB SERVER using the `npm start` command.
+4. Navigate to the root folder and start the CLIENT using the `npm start` command. The app will be served at <http://localhost:3000/>.
+5. Go to <http://localhost:3000/> in your browser.
 
-### Static Files
+## Dependencies
 
-You can store static files like images, fonts, etc in the `build` folder.
+- React
+- ReactDOM
+- Express
+- uuid
+- ws
 
-For example, if you copy a file called my_image.png into the build folder you can access it using `http://localhost:3000/build/my_image.png`.
+## Screenshots
 
-### Linting
+!["Tweeter Homepage"](https://github.com/Stanley1111/tweeter/blob/master/docs/TweeterHome.png)
+!["Compose a Tweet"](https://github.com/Stanley1111/tweeter/blob/master/docs/TweeterCompose.png)
+!["Error: Trying to submit with no tweet"](https://github.com/Stanley1111/tweeter/blob/master/docs/ErrorNoTweet.png)
+!["Error: Tweet too long"](https://github.com/Stanley1111/tweeter/blob/master/docs/ErrorTooLong.png)
 
-This boilerplate project includes React ESLint configuration.
-
-```
-npm run lint
-```
-
-### Dependencies
-
-* React
-* Webpack
-* [babel-loader](https://github.com/babel/babel-loader)
-* [webpack-dev-server](https://github.com/webpack/webpack-dev-server)
