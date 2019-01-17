@@ -10,7 +10,7 @@ let numUser = 0;
 const colours = ['#2813b0','#7712ad','#1281ad','#b5165b','#ad15a3','#b37a10','#33ad1d'];
 
 // Set the port to 3001
-const PORT = 3001;
+const PORT = process.env.PORT || 3001;
 
 // Create a new express server
 const app = express();
