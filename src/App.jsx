@@ -38,7 +38,9 @@ class App extends Component {
   };
 
   componentDidMount(){
-    this.socket = new WebSocket('ws://localhost:3001');
+    const HOST = location.origin.replace(/^http/, 'ws')
+    this.socket = new WebSocket(HOST);
+    // this.socket = new WebSocket('ws://localhost:3001');
 
     this.socket.onopen = () => {
           console.log('Connected to WebSocket');
